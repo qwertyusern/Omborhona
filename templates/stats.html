@@ -141,20 +141,24 @@
                             <th scope="col" style="text-align: center;">Umumiy summa</th>
                             <th scope="col" style="text-align: center;">To'landi</th>
                             <th scope="col" style="text-align: center;">Nasiya</th>
+                            <th scope="col" style="text-align: center;">Foyda</th>
                         </tr>
                     </thead>
                     <tbody>
+                    {% for i in stats %}
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Product nomi, brend nomi</td>
-                            <td>Client ismi, do'koni nomi</td>
-                            <td>2022.06.13</td>
-                            <td>30</td>
-                            <td>1260000 so'm</td>
-                            <td>560000 so'm</td>
-                            <td>700000 so'm</td>
-                            <td><a href="#"><button type="submit" class="btn btn-danger" data-toggle="modal">Tahrirlash</button></a></td>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{i.mahsulot.nom}} ({{i.mahsulot.brend}})</td>
+                            <td>{{i.client.ism}} ({{i.client.dokon}})</td>
+                            <td>{{i.sana}}</td>
+                            <td>{{i.miqdor}}</td>
+                            <td>{{i.umumiy}}</td>
+                            <td>{{i.tolandi}}</td>
+                            <td>{{i.nasiya}}</td>
+                            <td>{{i.foyda}}</td>
+                            <td><a href="/stats/statistika/"><button type="submit" class="btn btn-danger" data-toggle="modal">Tahrirlash</button></a></td>
                         </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -173,28 +177,33 @@
           </div>
     
           <!-- Modal body -->
-          <form action="#" id="new-product-form" method="post">{% csrf_token %}
+          <form action="{%urls 'stats'%}" id="new-product-form" method="post">{% csrf_token %}
             <div class="modal-body">
-              <label for="product">Product:</label>
-             <input type="datetime-local" name="sana" placeholder="Sana" id="product" class="form-control" required>
+                <label for="mahsulot">Mahsulot:</label>
+                <select name="mah" id="mahsulot" class="form-control" required>
+                    {%for i in mahsulot%}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {%endfor%}
+                </select>
                 <br>
-              <label for="client">Client:</label>
-                <input type="datetime-local" name="sana" placeholder="Sana" id="client" class="form-control" required>
-              <br>
-              <label for="sana">Sana:</label>
-              <input type="datetime-local" name="sana" placeholder="Sana" id="sana" class="form-control" required>
-              <br>
+                <label for="client">Client:</label>
+                <select name="c" id="client" class="form-control" required>
+                    {%for i in client%}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {%endfor%}
+                </select>
+                <br>
                 <label for="miqdor">Miqdor:</label>
-              <input type="number" name="miqdor" placeholder="Miqdor" id="miqdor" class="form-control" required>
+              <input type="number" name="m" placeholder="Miqdor" id="miqdor" class="form-control" required>
               <br>
               <label for="umumiy_summa">Umumiy summa:</label>
-              <input type="number" name="summa" placeholder="Umumiy summa" id="umumiy_summa" class="form-control" required>
+              <input type="number" name="u" placeholder="Umumiy summa" id="umumiy_summa" class="form-control" required>
               <br>
                 <label for="nasiya">Nasiya:</label>
-              <input type="number" name="nasiya" placeholder="Nasiya" id="nasiya" class="form-control" required>
+              <input type="number" name="n" placeholder="Nasiya" id="nasiya" class="form-control" required>
               <br>
                 <label for="tolandi">To'landi:</label>
-              <input type="number" name="tolandi" placeholder="To'landi" id="tolandi" class="form-control" required>
+              <input type="number" name="t" placeholder="To'landi" id="tolandi" class="form-control" required>
               <br>
             </div>
     
